@@ -65,7 +65,7 @@ public:
       sensor_msgs::CameraInfo cameraInfo;
 
       cas.get(VIEW_CLOUD,*cloud_ptr);
-      cas.get(VIEW_COLOR_IMAGE, image);
+      cas.get(VIEW_CLUSTER_IMAGE, image);
       cas.get(VIEW_COLOR_CAMERA_INFO, cameraInfo);
 
       outInfo("Cloud size: " << cloud_ptr->points.size());
