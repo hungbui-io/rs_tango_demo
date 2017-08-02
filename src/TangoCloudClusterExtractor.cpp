@@ -172,10 +172,8 @@ private:
         }
         outDebug("adding clusters took: " << clock.getTime() - t << " ms.");
         cv::Mat cluster_image;
-        cluster_image = this->color;
+        drawImageWithLock(cluster_image);
         cas.set(VIEW_CLUSTER_IMAGE, cluster_image);
-        return UIMA_ERR_NONE;
-
         return UIMA_ERR_NONE;
     }
 
