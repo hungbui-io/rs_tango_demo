@@ -32,10 +32,6 @@
 
 using namespace uima;
 
-/**
- * @brief The PointCloudClusterExtractor class
- * given a plane equation,
- */
 class TangoCloudClusterExtractor : public DrawingAnnotator
 {
 private:
@@ -136,7 +132,6 @@ private:
 
         clusters.resize(cluster_indices.size());
 
-#pragma omp parallel for schedule(dynamic)
         for(size_t i = 0; i < cluster_indices.size(); ++i)
         {
             Cluster &cluster = clusters[i];
@@ -244,10 +239,7 @@ private:
         pcl::ExtractPolygonalPrismData<PointT> epm;
         epm.setInputCloud(cloud);
         epm.setInputPlanarHull(cloud_hull);
-
-        /*TODO::Check why this is so sensitive
-    why does this need to be so freaking high? (if set lower it finds
-    points that are actually part of the plane)*/
+        
         epm.setHeightLimits(polygon_min_height, polygon_max_height);
         epm.segment(*prism_inliers);
         outDebug("points in the prism: " << prism_inliers->indices.size());
@@ -310,9 +302,6 @@ private:
                     Eigen::Vector2d imageCoords;
                     imageCoords[0] = cloud_cluster->points[i].x/cloud_cluster->points[i].z;
                     imageCoords[1] = cloud_cluster->points[i].y/cloud_cluster->points[i].z;
-
-//                    cv::Mat img = color.clone();
-//                    mask_full = cv::Mat::zeros(img.size().height, img.size().width, CV_8U);
 
                     float r2 = imageCoords.adjoint()*imageCoords;
                     float r4 = r2*r2;
