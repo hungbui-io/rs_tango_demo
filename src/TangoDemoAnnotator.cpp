@@ -14,13 +14,8 @@
 #include <sensor_msgs/CameraInfo.h>
 #include <cv_bridge/cv_bridge.h>
 #include <image_transport/image_transport.h>
-//#include <sensor_msgs/image_encodings.h>
-//#include <opencv2/imgproc/imgproc.hpp>
-//#include <opencv2/highgui/highgui.hpp>
-
 
 using namespace uima;
-
 
 class TangoDemoAnnotator : public Annotator
 {
@@ -28,17 +23,9 @@ private:
     ros::NodeHandle nh_;
 
     image_transport::Publisher image_pub;
-    //ros::Publisher image_pub;
     ros::Publisher cloud_pub;
     ros::Publisher camInfo_pub;
 public:
-
-//    TangoDemoAnnotator(): nh_("~")
-//    {
-//        image_pub = nh_.advertise<sensor_msgs::Image>("/rs/tango/image", 1);
-//        cloud_pub = nh_.advertise<sensor_msgs::PointCloud2>("/rs//tango/cloud", 1);
-//        camInfo_pub = nh_.advertise<sensor_msgs::CameraInfo>("/rs/tango/cameraInfo", 1);
-//    }
   TyErrorId initialize(AnnotatorContext &ctx)
   {
       image_transport::ImageTransport it(nh_);
@@ -70,11 +57,6 @@ public:
 
       outInfo("Cloud size: " << cloud_ptr->points.size());
       outInfo("took: " << clock.getTime() << " ms.");
-
-      //outInfo("Image size: " << image.size());
-
-      //sensor_msgs::CameraInfo camInfo_msg;
-
 
       sensor_msgs::PointCloud2 cloud_msg;
       sensor_msgs::ImagePtr image_msg = cv_bridge::CvImage(std_msgs::Header(), "bgr8", image).toImageMsg();
